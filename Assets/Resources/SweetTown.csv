@@ -1,0 +1,6 @@
+number,stage,orderNum,name,message
+0,1,-1,LILY,Hello. may i take your order?
+1,1,0,customer,Add bananas and blueberries to strawberry pancakes and sprinkle whipped cream. And hot espresso please.
+2,1,-1,LILY,Please check the receipt. Is this order correct?
+3,1,-1,customer,"Yes, that's right."
+0,2,,,
