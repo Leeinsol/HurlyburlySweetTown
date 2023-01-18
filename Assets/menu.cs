@@ -10,13 +10,13 @@ public struct Material {
 public class menu : MonoBehaviour
 {
     //Material material = new Material();
-    public Material[] Topping = new Material[4];
+    public Material[] Topping = new Material[3];
     public Material[] Flavor = new Material[3];
     public Material[] AddShotCream = new Material[3];
     public Material[] Beverage = new Material[6];
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         initializeMaterial(Topping, 0, "Banana", 1);
         initializeMaterial(Topping, 1, "Blueberry", 1.5f);
