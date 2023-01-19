@@ -28,7 +28,7 @@ public class test : MonoBehaviour
 
     public float totalPrice = 0;
 
-    int StageNum = 0;
+    public int StageNum = 1;
     int OrderNum = 0;
 
     // Start is called before the first frame update
@@ -52,13 +52,13 @@ public class test : MonoBehaviour
         saveToppingList(0);
         saveTotalPrice(0);
 
-        for (int i = 0; i < orders.Count; i++)
-        {
-            if (orders[i]["stage"].ToString() == "2")
-            {
-                Debug.Log(i+" "+ orders[i]["menuNum"].ToString());
-            }
-        }
+        //for (int i = 0; i < orders.Count; i++)
+        //{
+        //    if (orders[i]["stage"].ToString() == "2")
+        //    {
+        //        Debug.Log(i+" "+ orders[i]["menuNum"].ToString());
+        //    }
+        //}
     }
 
     // Update is called once per frame
@@ -66,14 +66,16 @@ public class test : MonoBehaviour
     {
         if (csvNum == 0 && !isTyping)
         {
-            NameText.GetComponent<TextMeshProUGUI>().text = data[0]["name"].ToString();
-            StartCoroutine(typing(SalespersonMessageText, data[0]["message"].ToString()));
+            NameText.GetComponent<TextMeshProUGUI>().text = FindMessage(StageNum, "SalespersonName",-1);// data[0]["message"].ToString();
+            //StartCoroutine(typing(SalespersonMessageText, data[0]["message"].ToString()));
+            StartCoroutine(typing(SalespersonMessageText, FindMessage(0, "SalespersonText",0)));
         }
         else if (csvNum == 1 && !isTyping)
         {
             CustomerMessage.SetActive(true);
 
-            StartCoroutine(typing(CustomerMessageText, data[1]["message"].ToString()));
+            //StartCoroutine(typing(CustomerMessageText, data[1]["message"].ToString()));
+            StartCoroutine(typing(CustomerMessageText, FindOrder(StageNum, 0)));
         }
         else if (csvNum == 2 && !isTyping)
         {
@@ -83,49 +85,69 @@ public class test : MonoBehaviour
 
             FindMenuName(0);
             orderSheet.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text
-                = orders[0]["menuNum"].ToString() + " " + menuScript.Flavor[(int)orders[0]["Flavor"]].Name + " " + menuName;
+                =  "1 " + menuScript.Flavor[(int)orders[0]["Flavor"]].Name + " " + menuName;
 
-            //ToppingList = new int[orders[0]["Topping"].ToString().Length];
-            //Debug.Log(orders[0]["Topping"].ToString().Length);
-            for (int i= orders[0]["Topping"].ToString().Length -1 ; i >= 0; i--)
+            for (int i = orders[0]["Topping"].ToString().Length - 1; i >= 0; i--)
             {
-                //ToppingList = new int[1];
-                //ToppingList[i] = int.Parse(orders[0]["Topping"].ToString().Substring(i, 1));
-                //ToppingList[i] = int.Parse(orders[0]["Topping"].ToString()) % 10;
-                //Debug.Log("ToppingList" + i + ToppingList[i]);
-                //Debug.Log(orders[0]["Topping"].ToString());
-                orderSheet.transform.GetChild(i + 1).GetComponent<TextMeshProUGUI>().text
-                = "+ " + menuScript.Topping[ToppingList[i]].Name;
 
-                //totalPrice += menuScript.Topping[ToppingList[i]].Price;
+                orderSheet.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text
+                += "\n+ " + menuScript.Topping[int.Parse(orders[OrderNum]["Topping"].ToString().Substring(i, 1))].Name;
+
 
             }
 
             //orderSheet.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text
             //    = "+ " + menuScript.Flavor[ToppingList[1]].Name;
 
-            orderSheet.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text
-                = "+ " + menuScript.AddShotCream[(int)orders[0]["AddShotCream"]].Name;
+            orderSheet.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text
+                += "\n+ " + menuScript.AddShotCream[(int)orders[0]["AddShotCream"]].Name;
 
 
-            orderSheet.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text
-                = orders[0]["BeverageNum"].ToString() + " " + menuScript.Beverage[(int)orders[0]["Beverage"]].Name;
+            orderSheet.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text
+                += "\n" + orders[0]["BeverageNum"].ToString() + " " + menuScript.Beverage[(int)orders[0]["Beverage"]].Name;
 
             orderSheet.transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = orders[0]["TotalPrice"].ToString();
             CustomerMessage.SetActive(false);
 
-            StartCoroutine(typing(SalespersonMessageText, data[2]["message"].ToString()));
+            StartCoroutine(typing(SalespersonMessageText, FindMessage(0, "SalespersonText", 1)));
         }
         else if (csvNum == 3 && !isTyping)
         {
             //Invoke("setActiveCustomerMessage", 1f);
             CustomerMessage.SetActive(true);
 
-            StartCoroutine(typing(CustomerMessageText, data[3]["message"].ToString()));
+            StartCoroutine(typing(CustomerMessageText, FindMessage(0, "CustomerText", 0)));
         }
 
-        
+    }
 
+    string FindMessage(int stage, string type, int messageNum)
+    {
+        for (int i = 0; i < data.Count; i++)
+        {
+            if (int.Parse(data[i]["stage"].ToString()) == stage 
+                && data[i]["type"].ToString() == type 
+                && int.Parse(data[i]["messageNum"].ToString()) == messageNum)
+            {
+                Debug.Log(data[i]["message"].ToString());
+                return data[i]["message"].ToString();
+            }
+        }
+        return null;
+    }
+
+    string FindOrder(int stage, int orderNum)
+    {
+        for (int i = 0; i < data.Count; i++)
+        {
+            if (data[i]["stage"].ToString() == stage.ToString()
+                && data[i]["orderNum"].ToString() == orderNum.ToString())
+            {
+                Debug.Log(data[i]["message"].ToString());
+                return data[i]["message"].ToString();
+            }
+        }
+        return null;
     }
 
     void saveTotalPrice(int OrderNum)
