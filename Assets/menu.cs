@@ -52,8 +52,8 @@ public class menu : MonoBehaviour
             initializeMaterial(Flavor, 1, "Red Velvet", 3.8f);
             initializeMaterial(Flavor, 2, "Vanilla", 3.8f);
 
-            initializeMaterial(AddShotCream, 0, "Cream Cheese", 0.5f);
-            initializeMaterial(AddShotCream, 1, "Milk Cream", 0.3f);
+            initializeMaterial(AddShotCream, 0, "Milk Cream", 0.3f);
+            initializeMaterial(AddShotCream, 1, "Cream Cheese", 0.5f);
             initializeMaterial(AddShotCream, 2, "Choco Cream", 0.3f);
 
             initializeMaterial(Beverage, 0, "Strawberry shake", 4);
