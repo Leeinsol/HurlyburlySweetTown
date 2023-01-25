@@ -39,7 +39,7 @@ public class menu : MonoBehaviour
             initializeMaterial(Beverage, 2, "Coke", 0.5f);
             initializeMaterial(Beverage, 3, "Hot Espresso", 3);
             initializeMaterial(Beverage, 4, "Cocoa", 3.5f);
-            initializeMaterial(Beverage, 5, "S Cafe Latte", 4);
+            initializeMaterial(Beverage, 5, "Cafe Latte", 4);
         }
 
         if(StageNum == 2)

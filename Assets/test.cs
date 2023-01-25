@@ -31,7 +31,6 @@ public class test : MonoBehaviour
     public int OrderNum = 0;
 
     float Timer = 2f;
-
     // Start is called before the first frame update
     void Start()
     {
