@@ -30,7 +30,8 @@ public class test : MonoBehaviour
     public int StageNum = 1;
     public int OrderNum = 0;
 
-    float Timer = 2f;
+    float Timer = 3f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -62,6 +63,7 @@ public class test : MonoBehaviour
 
         clearMessageText(orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>());
 
+        transform.GetChild(2).gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -82,98 +84,114 @@ public class test : MonoBehaviour
         }
         else if(csvNum==2 && !isTyping)
         {
-            if (Timer > 1)
+            if (Timer > 0)
             {
+                //Debug.Log(Timer);
                 Timer -= Time.deltaTime;
                 return;
             }
             else
             {
                 setMessageGameObject(CustomerMessage, false);
-                Timer = 1f;
+                transform.GetChild(2).gameObject.SetActive(true);
+
+                Timer = 3f;
             }
 
+            clearMessageText(SalespersonMessageText);
+
+            FindMenuName();
+            int index = FindIndex(StageNum, OrderNum);
+            //Debug.Log("index: " + index);
+            if (StageNum == 1)
+            {
+                orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
+                = "1 " + menuScript.Flavor[(int)orders[index]["Flavor"]].Name + " " + menuName;
+
+                for (int i = orders[index]["Topping"].ToString().Length - 1; i >= 0; i--)
+                {
+                    orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
+                    += "\n+ " + menuScript.Topping[int.Parse(orders[index]["Topping"].ToString().Substring(i, 1))].Name;
+                }
+
+                orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
+                    += "\n+ " + menuScript.AddShotCream[(int)orders[index]["AddShotCream"]].Name;
+
+
+                orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
+                    += "\n1 " + menuScript.Beverage[(int)orders[index]["Beverage"]].Name;
+
+            }
+
+            else if (StageNum == 2)
+            {
+                for (int i = orders[index]["Flavor"].ToString().Length - 1; i >= 0; i--)
+                {
+                    //Debug.Log(i + menuScript.Flavor[int.Parse(orders[index]["Flavor"].ToString().Substring(i, 1))].Name);
+                    if (i != orders[index]["Flavor"].ToString().Length - 1) orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text += "\n";
+                    orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
+                    += "1 " + menuScript.Flavor[int.Parse(orders[index]["Flavor"].ToString().Substring(i, 1))].Name + " " + menuName;
+
+                    orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
+                    += "\n+ " + menuScript.Topping[int.Parse(orders[index]["Topping"].ToString().Substring(i, 1))].Name;
+
+                    orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
+                    += "\n+ " + menuScript.AddShotCream[int.Parse(orders[index]["AddShotCream"].ToString().Substring(i, 1))].Name;
+
+                }
+
+                orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
+                    += "\n1 " + menuScript.Beverage[(int)orders[index]["Beverage"]].Name
+                    + "\n+ Whipped cream"
+                    + "\n+ Choco syrup";
+            }
+
+            orderSheet.transform.Find("TotalPriceText").GetComponent<TextMeshProUGUI>().text
+                = "$ " + orders[index]["TotalPrice"].ToString();
+
+            if (transform.GetChild(2).GetComponent<menuChoice>().checkNext)
+            {
+                orderSheet.SetActive(true);
+                transform.GetChild(2).gameObject.SetActive(false);
+                StartCoroutine(typing(SalespersonMessageText, FindMessage(0, "SalespersonText", 1)));
+                transform.GetChild(2).GetComponent<menuChoice>().checkNext = false;
+            }
+
+            //CustomerMessage.SetActive(false);
+
         }
-        //else if (csvNum == 2 && !isTyping)
-        //{
-        //    //Invoke("setActiveCustomerMessage", 1f);
-        //    if (Timer > 1)
-        //    {
-        //        Timer -= Time.deltaTime;
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        setMessageGameObject(CustomerMessage,false);
-        //        Timer = 1f;
-        //    }
 
-        //    clearMessageText(SalespersonMessageText);
+        else if (csvNum == 3 && !isTyping)
+        {
+            //Invoke("setActiveCustomerMessage", 1f);
+            CustomerMessage.SetActive(true);
 
-        //    //order sheet
-        //    orderSheet.SetActive(true);
+            StartCoroutine(typing(CustomerMessageText, FindMessage(0, "CustomerText", 0)));
 
-        //    FindMenuName();
-        //    int index = FindIndex(StageNum, OrderNum);
-        //    //Debug.Log("index: " + index);
-        //    if(StageNum == 1)
-        //    {
-        //        orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
-        //        = "1 " + menuScript.Flavor[(int)orders[index]["Flavor"]].Name + " " + menuName;
-
-        //        for (int i = orders[index]["Topping"].ToString().Length - 1; i >= 0; i--)
-        //        {
-        //            orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
-        //            += "\n+ " + menuScript.Topping[int.Parse(orders[index]["Topping"].ToString().Substring(i, 1))].Name;
-        //        }
-
-        //        orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
-        //            += "\n+ " + menuScript.AddShotCream[(int)orders[index]["AddShotCream"]].Name;
+        }
+        else if(csvNum==4 && !isTyping)
+        {
 
 
-        //        orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
-        //            += "\n1 " + menuScript.Beverage[(int)orders[index]["Beverage"]].Name;
+            if (Timer > 0)
+            {
+                //Debug.Log(Timer);
+                Timer -= Time.deltaTime;
+                return;
+            }
+            else
+            {
+                csvNum = 0;
+                OrderNum++;
+                closeOrderSheet();
+                clearMessageText(SalespersonMessageText);
+                clearMessageText(CustomerMessageText);
+                CustomerMessage.SetActive(false);
 
-        //    }
+                Timer = 3f;
 
-        //    else if (StageNum == 2)
-        //    {
-        //        for(int i=orders[index]["Flavor"].ToString().Length-1; i>=0; i--)
-        //        {
-        //            //Debug.Log(i + menuScript.Flavor[int.Parse(orders[index]["Flavor"].ToString().Substring(i, 1))].Name);
-        //            if (i != orders[index]["Flavor"].ToString().Length - 1) orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text += "\n";
-        //            orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
-        //            += "1 " + menuScript.Flavor[int.Parse(orders[index]["Flavor"].ToString().Substring(i, 1))].Name + " " + menuName;
-
-        //            orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
-        //            += "\n+ " + menuScript.Topping[int.Parse(orders[index]["Topping"].ToString().Substring(i, 1))].Name;
-
-        //            orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
-        //            += "\n+ " + menuScript.AddShotCream[int.Parse(orders[index]["AddShotCream"].ToString().Substring(i, 1))].Name;
-
-        //        }
-
-        //        orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
-        //            += "\n1 " + menuScript.Beverage[(int)orders[index]["Beverage"]].Name
-        //            + "\n+ Whipped cream"
-        //            + "\n+ Choco syrup";
-        //    }
-
-        //    orderSheet.transform.Find("TotalPriceText").GetComponent<TextMeshProUGUI>().text 
-        //        = "$ " + orders[index]["TotalPrice"].ToString();
-
-        //    //CustomerMessage.SetActive(false);
-
-        //    StartCoroutine(typing(SalespersonMessageText, FindMessage(0, "SalespersonText", 1)));
-        //}
-
-        //else if (csvNum == 3 && !isTyping)
-        //{
-        //    //Invoke("setActiveCustomerMessage", 1f);
-        //    CustomerMessage.SetActive(true);
-
-        //    StartCoroutine(typing(CustomerMessageText, FindMessage(0, "CustomerText", 0)));
-        //}
+            }
+        }
 
     }
 
@@ -206,7 +224,7 @@ public class test : MonoBehaviour
         return null;
     }
 
-    int FindIndex(int stage, int orderNum)
+    public int FindIndex(int stage, int orderNum)
     {
         for(int i=0; i<orders.Count; i++)
         {
@@ -298,10 +316,15 @@ public class test : MonoBehaviour
         {
             MessageText.text = message.Substring(0, i+1);
 
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.05f);
         }
 
         csvNum++;
         isTyping = false;
+    }
+
+    public void closeOrderSheet()
+    {
+        orderSheet.SetActive(false);
     }
 }

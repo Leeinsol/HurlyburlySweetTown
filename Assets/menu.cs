@@ -15,12 +15,13 @@ public class menu : MonoBehaviour
     public Material[] AddShotCream = new Material[3];
     public Material[] Beverage = new Material[6];
 
-    public int StageNum = 1;
+    //public int StageNum = 1;
 
     // Start is called before the first frame update
     void OnEnable()
     {
-        if(StageNum == 1)
+
+        if (transform.GetComponent<test>().StageNum == 1)
         {
             initializeMaterial(Topping, 0, "Banana", 1);
             initializeMaterial(Topping, 1, "Blueberry", 1.5f);
@@ -37,12 +38,12 @@ public class menu : MonoBehaviour
             initializeMaterial(Beverage, 0, "Milk", 2);
             initializeMaterial(Beverage, 1, "Banana Milk", 2);
             initializeMaterial(Beverage, 2, "Coke", 0.5f);
-            initializeMaterial(Beverage, 3, "Hot Espresso", 3);
+            initializeMaterial(Beverage, 3, "Espresso", 3);
             initializeMaterial(Beverage, 4, "Cocoa", 3.5f);
             initializeMaterial(Beverage, 5, "Cafe Latte", 4);
         }
 
-        if(StageNum == 2)
+        if(transform.GetComponent<test>().StageNum == 2)
         {
             initializeMaterial(Topping, 0, "Cherry", 1.5f);
             initializeMaterial(Topping, 1, "Oreo", 1.5f);
