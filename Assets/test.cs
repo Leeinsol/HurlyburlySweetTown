@@ -30,7 +30,7 @@ public class test : MonoBehaviour
     public int StageNum = 1;
     public int OrderNum = 0;
 
-    float Timer = 3f;
+    float Timer = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -95,7 +95,7 @@ public class test : MonoBehaviour
                 setMessageGameObject(CustomerMessage, false);
                 transform.GetChild(2).gameObject.SetActive(true);
 
-                Timer = 3f;
+                Timer = 2f;
             }
 
             clearMessageText(SalespersonMessageText);
@@ -105,6 +105,8 @@ public class test : MonoBehaviour
             //Debug.Log("index: " + index);
             if (StageNum == 1)
             {
+                orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text = "";
+
                 orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
                 = "1 " + menuScript.Flavor[(int)orders[index]["Flavor"]].Name + " " + menuName;
 
@@ -120,11 +122,12 @@ public class test : MonoBehaviour
 
                 orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text
                     += "\n1 " + menuScript.Beverage[(int)orders[index]["Beverage"]].Name;
-
             }
 
             else if (StageNum == 2)
             {
+                orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text = "";
+
                 for (int i = orders[index]["Flavor"].ToString().Length - 1; i >= 0; i--)
                 {
                     //Debug.Log(i + menuScript.Flavor[int.Parse(orders[index]["Flavor"].ToString().Substring(i, 1))].Name);
@@ -145,6 +148,7 @@ public class test : MonoBehaviour
                     + "\n+ Whipped cream"
                     + "\n+ Choco syrup";
             }
+            saveTotalPrice(StageNum, OrderNum);
 
             orderSheet.transform.Find("TotalPriceText").GetComponent<TextMeshProUGUI>().text
                 = "$ " + orders[index]["TotalPrice"].ToString();
@@ -188,7 +192,7 @@ public class test : MonoBehaviour
                 clearMessageText(CustomerMessageText);
                 CustomerMessage.SetActive(false);
 
-                Timer = 3f;
+                Timer = 2f;
 
             }
         }
@@ -316,7 +320,7 @@ public class test : MonoBehaviour
         {
             MessageText.text = message.Substring(0, i+1);
 
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.02f);
         }
 
         csvNum++;

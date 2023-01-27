@@ -59,7 +59,7 @@ public class menu : MonoBehaviour
 
             initializeMaterial(Beverage, 0, "Strawberry shake", 4);
             initializeMaterial(Beverage, 1, "Chocolate shake", 4);
-            initializeMaterial(Beverage, 2, "Vanilla  shake", 4);
+            initializeMaterial(Beverage, 2, "Vanilla shake", 4);
         }
 
     }

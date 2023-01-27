@@ -20,6 +20,12 @@ public class menuChoice : MonoBehaviour
     public Sprite[] Stage1AddShotCreamImage;
     public Sprite[] Stage1BeverageImage;
 
+    public Sprite[] Stage2ToppingImage;
+    public Sprite[] Stage2FlavorImage;
+    public Sprite[] Stage2AddShotCreamImage;
+    public Sprite[] Stage2BeverageImage;
+
+
     GameObject[] OptionImage = new GameObject[3];
     bool showMenu = false;
 
@@ -27,12 +33,7 @@ public class menuChoice : MonoBehaviour
     GameObject FlavorButton;
     GameObject AddShotCreamButton;
     GameObject BeverageButton;
-    // 배열으로 바꿀 수 있으면 바꾸기
 
-    //GameObject Option1Image;
-    //GameObject Option2Image;
-    //GameObject Option3Image;
-    
     menu menuScript;
 
     bool NextMenuCheck;
@@ -40,7 +41,7 @@ public class menuChoice : MonoBehaviour
     bool isChoice = false;
 
 
-    public bool[] ToppingList = new bool[3];
+    public bool[] ToppingList;
     public bool[] FlavorList;
     public bool[] AddShotCreamList;
     public bool[] BeverageList;
@@ -48,6 +49,8 @@ public class menuChoice : MonoBehaviour
     string pageName;
     string listName;
     public bool checkNext;
+
+    int stageNum = 0;
 
     List<Dictionary<string, object>> orders;
 
@@ -67,7 +70,24 @@ public class menuChoice : MonoBehaviour
         //Option2Image = transform.Find("Option2Image").gameObject;
         //Option3Image = transform.Find("Option3Image").gameObject;
 
-        for(int i = 0; i < 3; i++)
+        stageNum = transform.parent.gameObject.GetComponent<test>().StageNum;
+
+        if (stageNum == 1)
+        {
+            ToppingList = new bool[Stage1ToppingImage.Length];
+            FlavorList = new bool[Stage1FlavorImage.Length];
+            AddShotCreamList = new bool[Stage1AddShotCreamImage.Length];
+            BeverageList = new bool[Stage1BeverageImage.Length];
+        }
+        else if(stageNum == 2)
+        {
+            ToppingList = new bool[Stage2ToppingImage.Length];
+            FlavorList = new bool[Stage2FlavorImage.Length];
+            AddShotCreamList = new bool[Stage2AddShotCreamImage.Length];
+            BeverageList = new bool[Stage2BeverageImage.Length];
+        }
+
+        for (int i = 0; i < 3; i++)
         {
             string obName = "Option" + (i + 1) + "Image";
             //Debug.Log(obName);
@@ -76,10 +96,6 @@ public class menuChoice : MonoBehaviour
 
         ClickToppingButton();
 
-        ToppingList = new bool[Stage1ToppingImage.Length];
-        FlavorList = new bool[Stage1FlavorImage.Length];
-        AddShotCreamList = new bool[Stage1AddShotCreamImage.Length];
-        BeverageList = new bool[Stage1BeverageImage.Length];
     }
 
     // Update is called once per frame
@@ -93,6 +109,9 @@ public class menuChoice : MonoBehaviour
         //{
         //    Time.timeScale = 1;
         //}
+
+        if (pageName == "Beverage" && BeverageList.Length > 3) setNextButton(true);
+        else setNextButton(false);
     }
 
     void resetButtonBackground()
@@ -127,7 +146,15 @@ public class menuChoice : MonoBehaviour
                 = "$ " + menuScript.Topping[i].Price.ToString();
             }
 
-            OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage1ToppingImage[i];
+            if (stageNum == 1)
+            {
+                OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage1ToppingImage[i];
+            }
+            else if (stageNum == 2)
+            {
+                OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage2ToppingImage[i];
+            }
+
 
             OptionImage[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text
                 = menuScript.Topping[i].Name;
@@ -156,14 +183,20 @@ public class menuChoice : MonoBehaviour
                 = "$ " + menuScript.Flavor[i].Price.ToString();
             }
 
-            OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage1FlavorImage[i];
+            if (stageNum == 1)
+            {
+                OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage1FlavorImage[i];
+            }
+            else if (stageNum == 2)
+            {
+                OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage2FlavorImage[i];
+            }
+
 
             OptionImage[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text
                 = menuScript.Flavor[i].Name;
 
         }
-
-
     }
 
     public void ClickAddShotCreamButton()
@@ -187,15 +220,25 @@ public class menuChoice : MonoBehaviour
                 OptionImage[i].transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text
                 = "$ " + menuScript.AddShotCream[i].Price.ToString();
             }
-            
-            
-            OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage1AddShotCreamImage[i];
+
+            if (stageNum == 1)
+            {
+                OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage1AddShotCreamImage[i];
+            }
+            else if (stageNum == 2)
+            {
+                OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage2AddShotCreamImage[i];
+            }
 
             OptionImage[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text
                 = menuScript.AddShotCream[i].Name;
         }
     }
 
+    void setNextButton(bool state)
+    {
+        transform.Find("Button").GetChild(4).gameObject.SetActive(state);
+    }
     public void ClickBeverageButton()
     {
         pageName = "Beverage";
@@ -203,7 +246,6 @@ public class menuChoice : MonoBehaviour
         resetButtonBackground();
         BeverageButton.GetComponent<Image>().sprite = buttonChoiceBackground;
 
-        if (Stage1BeverageImage.Length > 3) transform.Find("Button").GetChild(4).gameObject.SetActive(true);
 
         for (int i = 0; i < 3; i++)
         {
@@ -221,7 +263,14 @@ public class menuChoice : MonoBehaviour
             }
 
 
-            OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage1BeverageImage[i];
+            if (stageNum == 1)
+            {
+                OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage1BeverageImage[i];
+            }
+            else if (stageNum == 2)
+            {
+                OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage2BeverageImage[i];
+            }
 
             OptionImage[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text
                 = menuScript.Beverage[i].Name;
@@ -236,7 +285,6 @@ public class menuChoice : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-
                 if (BeverageList[i+3] == true)
                 {
                     OptionImage[i].transform.GetChild(0).GetComponent<Image>().sprite = ChoiceMenuBackground;
@@ -250,20 +298,25 @@ public class menuChoice : MonoBehaviour
                     = "$ " + menuScript.Beverage[i + 3].Price.ToString();
                 }
 
-                OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage1BeverageImage[i+3];
+                if (stageNum == 1)
+                {
+                    OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage1BeverageImage[i+3];
+                }
+                else if (stageNum == 2)
+                {
+                    OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage2BeverageImage[i+3];
+                }
+
                 //OptionImage[i].transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text
                 //    = "$ " + menuScript.Beverage[i+3].Price.ToString();
                 OptionImage[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text
                     = menuScript.Beverage[i+3].Name;
-
-
             }
         }
         else
         {
             for (int i = 0; i < 3; i++)
             {
-
                 if (BeverageList[i] == true)
                 {
                     OptionImage[i].transform.GetChild(0).GetComponent<Image>().sprite = ChoiceMenuBackground;
@@ -277,7 +330,15 @@ public class menuChoice : MonoBehaviour
                     = "$ " + menuScript.Beverage[i].Price.ToString();
                 }
 
-                OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage1BeverageImage[i];
+                if (stageNum == 1)
+                {
+                    OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage1BeverageImage[i];
+                }
+                else if (stageNum == 2)
+                {
+                    OptionImage[i].transform.GetChild(2).GetComponent<Image>().sprite = Stage2BeverageImage[i];
+                }
+               
                 //OptionImage[i].transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text
                 //    = "$ " + menuScript.Beverage[i].Price.ToString();
                 OptionImage[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text
@@ -414,7 +475,7 @@ public class menuChoice : MonoBehaviour
         string check = "";
         checkNext = false;
 
-        int index = transform.parent.gameObject.GetComponent<test>().FindIndex(transform.parent.GetComponent<test>().StageNum, transform.parent.GetComponent<test>().OrderNum);
+        int index = transform.parent.gameObject.GetComponent<test>().FindIndex(stageNum, transform.parent.GetComponent<test>().OrderNum);
         for (int i = 2; i >= 0; i--)
         {
             if (ToppingList[i] == true)
@@ -468,7 +529,7 @@ public class menuChoice : MonoBehaviour
         }
 
         check = "";
-        for (int i = 5; i >= 0; i--)
+        for (int i = BeverageList.Length-1; i >= 0; i--)
         {
             if (BeverageList[i] == true)
             {
