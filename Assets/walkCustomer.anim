@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: neonSign
+  m_Name: walkCustomer
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,9 +20,9 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 8183049e9cff4d34ebd7ebeac595ea8e, type: 3}
-    - time: 0.25
-      value: {fileID: 21300000, guid: 1211d4e404f94774e96361cdee74578b, type: 3}
+      value: {fileID: -1998466988, guid: 4ea992ea65e2c7b48b952d5d7e3b8a9e, type: 3}
+    - time: 0.083333336
+      value: {fileID: 445861607, guid: 4ea992ea65e2c7b48b952d5d7e3b8a9e, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -42,14 +42,14 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 8183049e9cff4d34ebd7ebeac595ea8e, type: 3}
-    - {fileID: 21300000, guid: 1211d4e404f94774e96361cdee74578b, type: 3}
+    - {fileID: -1998466988, guid: 4ea992ea65e2c7b48b952d5d7e3b8a9e, type: 3}
+    - {fileID: 445861607, guid: 4ea992ea65e2c7b48b952d5d7e3b8a9e, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.33333334
+    m_StopTime: 0.16666667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
