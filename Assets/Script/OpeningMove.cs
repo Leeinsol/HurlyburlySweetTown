@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OpeningMove : MonoBehaviour
 {
@@ -60,5 +61,10 @@ public class OpeningMove : MonoBehaviour
     {
         transform.position = Vector2.MoveTowards(transform.position, goal, MoveSpeed);
 
+    }
+
+    public void StartButton()
+    {
+        SceneManager.LoadScene("Stage1");
     }
 }
