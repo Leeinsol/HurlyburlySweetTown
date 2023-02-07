@@ -19,12 +19,15 @@ public class OpeningMove : MonoBehaviour
     Vector3 customerOriginPos;
     Vector3 smokeOriginPos;
 
+    public GameObject startButton;
+
     // Start is called before the first frame update
     void Start()
     {
         customerOriginPos = customer.transform.position;
         smokeOriginPos = smoke.transform.position;
         goal = transform.position + distance;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -50,10 +53,21 @@ public class OpeningMove : MonoBehaviour
         //}
         //clouds.transform.position += Vector3.right * 1 * Time.deltaTime;
 
-        if(smoke.transform.position.x > -6.1)
+        if(smoke.transform.position.x > -6)
         {
-            customer.transform.GetComponent<SpriteRenderer>().sprite = surprisedCustomer;
+            //customer.transform.GetComponent<SpriteRenderer>().sprite = surprisedCustomer;
             exclamationMark.SetActive(true);
+        }
+
+        if (startButton.activeSelf)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 

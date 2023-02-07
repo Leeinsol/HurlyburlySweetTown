@@ -5,6 +5,7 @@ using UnityEngine;
 public class customer : MonoBehaviour
 {
     public Vector3 goal;
+    public Sprite surprisedCustomer;
 
     // Start is called before the first frame update
     void Start()
@@ -17,8 +18,14 @@ public class customer : MonoBehaviour
     {
         if (transform.localPosition.x <= goal.x)
         {
-            Debug.Log("goal");
             transform.GetComponent<Animator>().SetBool("isWalking", false);
-        }    
+            transform.GetComponent<SpriteRenderer>().sprite = surprisedCustomer;
+
+        }
+        else
+        {
+            //transform.GetComponent<Animator>().SetBool("isWalking", true);
+
+        }
     }
 }
