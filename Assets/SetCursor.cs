@@ -9,6 +9,8 @@ public class SetCursor : MonoBehaviour
     Texture2D bellHand;
     Texture2D ovenHand;
 
+    bool isMouseOver;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,8 +23,46 @@ public class SetCursor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 touchPos = new Vector2(worldPos.x, worldPos.y);
+        Ray2D ray = new Ray2D(touchPos, Vector2.zero);
+        RaycastHit2D rayHit = Physics2D.Raycast(ray.origin, ray.direction);
+
+        if (rayHit.collider != null)
+        {
+            if (Input.GetMouseButton(0))
+            {
+
+                if (rayHit.collider.gameObject.tag.Equals("whipper"))
+                {
+                    OnDrag();
+                }
+                if (rayHit.collider.gameObject.tag.Equals("bowl"))
+                {
+                    OnDrag();
+                }
+                if (rayHit.collider.gameObject.tag.Equals("kettle"))
+                {
+                    OnDrag();
+                }
+            }
+
+            if (rayHit.collider.gameObject.tag.Equals("bell"))
+            {
+                onBell();
+            }
+        }
+        else
+        {
+            SetOrigin();
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            SetOrigin();
+        }
     }
+
 
     public void OnDrag()
     {

@@ -70,7 +70,8 @@ public class menuChoice : MonoBehaviour
         //Option2Image = transform.Find("Option2Image").gameObject;
         //Option3Image = transform.Find("Option3Image").gameObject;
 
-        stageNum = transform.parent.gameObject.GetComponent<test>().StageNum;
+        //stageNum = transform.parent.gameObject.GetComponent<test>().StageNum;
+        stageNum = GameObject.Find("GameNum").GetComponent<GameNum>().StageNum;
 
         if (stageNum == 1)
         {
@@ -475,7 +476,8 @@ public class menuChoice : MonoBehaviour
         string check = "";
         checkNext = false;
 
-        int index = transform.parent.gameObject.GetComponent<test>().FindIndex(stageNum, transform.parent.GetComponent<test>().OrderNum);
+        //int index = transform.parent.gameObject.GetComponent<test>().FindIndex(stageNum, transform.parent.GetComponent<test>().OrderNum);
+        int index = transform.parent.gameObject.GetComponent<test>().FindIndex(stageNum, GameObject.Find("GameNum").GetComponent<GameNum>().OrderNum);
         for (int i = 2; i >= 0; i--)
         {
             if (ToppingList[i] == true)

@@ -3,7 +3,24 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - bananaCup
+  - whipping
+  - egg
+  - strawberryCup
+  - blueberryCup
+  - redButton
+  - bowl
+  - kettle
+  - flour
+  - whipper
+  - greenButton
+  - milk
+  - bell
+  - dottedLine
+  - pan
+  - redButton2
+  - greenButton2
   layers:
   - Default
   - TransparentFX
