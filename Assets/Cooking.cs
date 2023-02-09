@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Cooking : MonoBehaviour //, IDragHandler
 {
@@ -202,9 +203,15 @@ public class Cooking : MonoBehaviour //, IDragHandler
     //float fSliderBarTime;
     float tempTime = 0; //쓰는지 확인
 
+
+    List<Dictionary<string, object>> orders;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        orders = CSVReader.Read("order");
+
         startButton.SetActive(false);
         blueList.SetActive(false);
         bluePlus.SetActive(false);
@@ -293,15 +300,35 @@ public class Cooking : MonoBehaviour //, IDragHandler
 
     public void clickBlueList()
     {
-        if(isMenu == false)
+
+
+        if (!isMenu)
         {
-            clonedCookingMenu = Instantiate(CookingMenu, new Vector3(0, 0, 0), Quaternion.identity, GameObject.Find("Canvas").transform);
+            if (clonedCookingMenu == null)
+            {
+                clonedCookingMenu = Instantiate(CookingMenu, new Vector3(0, 0, 0), Quaternion.identity, GameObject.Find("Canvas").transform);
+                clonedCookingMenu.transform.localPosition = new Vector3(0, 0, 0);
+            }
+            else
+            {
+                clonedCookingMenu.SetActive(true);
+            }
+
             isMenu = true;
+
         }
-        else if (isMenu == true)
+        else if (isMenu)
         {
+            if (clonedCookingMenu == null)
+            {
+                clonedCookingMenu.SetActive(true);
+                Destroy(clonedCookingMenu);
+            }
+            else
+            {
+                clonedCookingMenu.SetActive(false);
+            }
             isMenu = false;
-            Destroy(clonedCookingMenu);
         }
     }
 
@@ -1471,6 +1498,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
                 if(rayHit.collider.gameObject.tag.Equals("bell"))
                 {
                     Invoke("showComplete", 0.5f);
+                    Debug.Log(checkDecoCount());
                 }
             }
         }
@@ -1479,5 +1507,41 @@ public class Cooking : MonoBehaviour //, IDragHandler
     void showComplete()
     {
         clonedComplete = Instantiate(complete, new Vector3(0, 0, 0), Quaternion.identity);
+
+        GameObject.Find("GameNum").GetComponent<GameNum>().OrderNum++;
+        Invoke("LoadStage1Scene", 1f);
+
+    }
+
+    void LoadStage1Scene()
+    {
+        SceneManager.LoadScene("Stage1");
+    }
+
+    bool checkDecoCount()
+    {
+        int index = FindIndex(GameObject.Find("GameNum").GetComponent<GameNum>().StageNum, GameObject.Find("GameNum").GetComponent<GameNum>().OrderNum);
+        
+        
+        if (remakePancakes[0] != 1) return false;
+        else if (remakePancakes[1] != 2) return false;
+        else if (remakePancakes[2] != 3) return false;
+        else if (remakePancakes[3] != 3) return false;
+
+        return true;
+    }
+
+    public int FindIndex(int stage, int orderNum)
+    {
+        for (int i = 0; i < orders.Count; i++)
+        {
+            if (orders[i]["stage"].ToString() == stage.ToString()
+                && orders[i]["orderNum"].ToString() == orderNum.ToString())
+            {
+                //Debug.Log(i);
+                return i;
+            }
+        }
+        return -1;
     }
 }

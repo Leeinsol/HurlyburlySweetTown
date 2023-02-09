@@ -186,7 +186,8 @@ public class test : MonoBehaviour
             }
             else
             {
-                SceneManager.LoadScene("Stage1Cooking");
+                //SceneManager.LoadScene("Stage1Cooking");
+                loadingSceneController.LoadScene("Stage1Cooking");
                 DontDestroyOnLoad(GameObject.Find("GameNum").gameObject);
 
                 //юс╫ц

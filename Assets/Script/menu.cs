@@ -31,7 +31,7 @@ public class menu : MonoBehaviour
             initializeMaterial(Flavor, 1, "Banana", 7);
             initializeMaterial(Flavor, 2, "Chocolate", 7);
 
-            initializeMaterial(AddShotCream, 0, "Shot", 0.5f);
+            initializeMaterial(AddShotCream, 0, "Chocolate Cream", 0.3f);
             initializeMaterial(AddShotCream, 1, "Milk Cream", 0.3f);
             initializeMaterial(AddShotCream, 2, "Strawberry Cream", 0.3f);
 
@@ -61,6 +61,8 @@ public class menu : MonoBehaviour
             initializeMaterial(Beverage, 1, "Chocolate shake", 4);
             initializeMaterial(Beverage, 2, "Vanilla shake", 4);
         }
+
+
     }
 
     void initializeMaterial( Material[] materials, int index, string Name, float Price)

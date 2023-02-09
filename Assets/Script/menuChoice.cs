@@ -474,10 +474,12 @@ public class menuChoice : MonoBehaviour
     bool checkMenu()
     {
         string check = "";
-        checkNext = false;
+        checkNext = true;
 
         //int index = transform.parent.gameObject.GetComponent<test>().FindIndex(stageNum, transform.parent.GetComponent<test>().OrderNum);
         int index = transform.parent.gameObject.GetComponent<test>().FindIndex(stageNum, GameObject.Find("GameNum").GetComponent<GameNum>().OrderNum);
+        
+        
         for (int i = 2; i >= 0; i--)
         {
             if (ToppingList[i] == true)
@@ -486,15 +488,7 @@ public class menuChoice : MonoBehaviour
             }
         }
 
-        if (orders[index]["Topping"].ToString() == check)
-        {
-            checkNext = true;
-        }
-        else
-        {
-            checkNext = false;
-        }
-
+        if (orders[index]["Topping"].ToString() != check) checkNext = false;
 
         check = "";
         for (int i = 2; i >= 0; i--)
@@ -504,14 +498,7 @@ public class menuChoice : MonoBehaviour
                 check += i.ToString();
             }
         }
-        if (orders[index]["Flavor"].ToString() == check)
-        {
-            checkNext = true;
-        }
-        else
-        {
-            checkNext = false;
-        }
+        if (orders[index]["Flavor"].ToString() != check) checkNext = false;
 
         check = "";
         for (int i = 2; i >= 0; i--)
@@ -521,14 +508,8 @@ public class menuChoice : MonoBehaviour
                 check += i.ToString();
             }
         }
-        if (orders[index]["AddShotCream"].ToString() == check)
-        {
-            checkNext = true;
-        }
-        else
-        {
-            checkNext = false;
-        }
+
+        if (orders[index]["AddShotCream"].ToString() != check) checkNext = false;
 
         check = "";
         for (int i = BeverageList.Length-1; i >= 0; i--)
@@ -539,14 +520,7 @@ public class menuChoice : MonoBehaviour
             }
         }
 
-        if (orders[index]["Beverage"].ToString() == check)
-        {
-            checkNext = true;
-        }
-        else
-        {
-            checkNext = false;
-        }
+        if (orders[index]["Beverage"].ToString() != check) checkNext = false;
 
         return checkNext;
     }
