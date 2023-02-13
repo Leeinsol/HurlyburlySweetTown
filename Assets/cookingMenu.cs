@@ -11,14 +11,14 @@ public class cookingMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        menuScript = transform.parent.parent.GetComponent<menu>();
+        menuScript = GameObject.Find("GameSetting").GetComponent<menu>();
 
         orders = CSVReader.Read("order");
 
-        int index = FindIndex(GameObject.Find("GameNum").GetComponent<GameNum>().StageNum, GameObject.Find("GameNum").GetComponent<GameNum>().OrderNum);
+        int index = FindIndex(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);
 
 
-        if (GameObject.Find("GameNum").GetComponent<GameNum>().StageNum == 1)
+        if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum == 1)
         {
             transform.GetComponent<TextMeshProUGUI>().text = "";
 
@@ -42,7 +42,7 @@ public class cookingMenu : MonoBehaviour
 
 
 
-         else if (GameObject.Find("GameNum").GetComponent<GameNum>().StageNum == 2)
+         else if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum == 2)
          {
             transform.GetComponent<TextMeshProUGUI>().text = "";
 

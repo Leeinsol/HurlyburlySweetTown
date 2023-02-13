@@ -59,7 +59,7 @@ public class menuChoice : MonoBehaviour
     {
         orders = CSVReader.Read("order");
 
-        menuScript = transform.parent.GetComponent<menu>();
+        menuScript = GameObject.Find("GameSetting").GetComponent<menu>();
 
         ToppingButton = transform.Find("Button").GetChild(0).gameObject;
         FlavorButton = transform.Find("Button").GetChild(1).gameObject;
@@ -71,7 +71,7 @@ public class menuChoice : MonoBehaviour
         //Option3Image = transform.Find("Option3Image").gameObject;
 
         //stageNum = transform.parent.gameObject.GetComponent<test>().StageNum;
-        stageNum = GameObject.Find("GameNum").GetComponent<GameNum>().StageNum;
+        stageNum = GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum;
 
         if (stageNum == 1)
         {
@@ -477,7 +477,7 @@ public class menuChoice : MonoBehaviour
         checkNext = true;
 
         //int index = transform.parent.gameObject.GetComponent<test>().FindIndex(stageNum, transform.parent.GetComponent<test>().OrderNum);
-        int index = transform.parent.gameObject.GetComponent<test>().FindIndex(stageNum, GameObject.Find("GameNum").GetComponent<GameNum>().OrderNum);
+        int index = transform.parent.gameObject.GetComponent<test>().FindIndex(stageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);
         
         
         for (int i = 2; i >= 0; i--)

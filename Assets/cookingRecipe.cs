@@ -16,9 +16,9 @@ public class cookingRecipe : MonoBehaviour
     void Start()
     {
         orders = CSVReader.Read("order");
-        menuScript = transform.parent.GetComponent<menu>();
+        menuScript = GameObject.Find("GameSetting").GetComponent<menu>();
 
-        int index = FindIndex(GameObject.Find("GameNum").GetComponent<GameNum>().StageNum, GameObject.Find("GameNum").GetComponent<GameNum>().OrderNum);
+        int index = FindIndex(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameNum").GetComponent<GameNum>().OrderNum);
 
         for (int i = 0; i < 4; i++)
         {

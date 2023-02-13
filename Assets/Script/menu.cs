@@ -21,7 +21,7 @@ public class menu : MonoBehaviour
     void OnEnable()
     {
 
-        if (GameObject.Find("GameNum").GetComponent<GameNum>().StageNum==1)
+        if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum==1)
         {
             initializeMaterial(Topping, 0, "Banana", 1);
             initializeMaterial(Topping, 1, "Blueberry", 1.5f);
@@ -43,7 +43,7 @@ public class menu : MonoBehaviour
             initializeMaterial(Beverage, 5, "Cafe Latte", 4);
         }
 
-        if (GameObject.Find("GameNum").GetComponent<GameNum>().StageNum == 2)
+        if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum == 2)
         {
             initializeMaterial(Topping, 0, "Cherry", 1.5f);
             initializeMaterial(Topping, 1, "Oreo", 1.5f);

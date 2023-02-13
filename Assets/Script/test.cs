@@ -36,7 +36,7 @@ public class test : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        menuScript = GetComponent<menu>();
+        menuScript = GameObject.Find("GameSetting").GetComponent<menu>();
         orderSheet.SetActive(false);
         NameText = SalespersonMessage.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         SalespersonMessageText = SalespersonMessage.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
@@ -52,7 +52,7 @@ public class test : MonoBehaviour
         //Debug.Log(menuScript.Topping[0].Name);
 
         saveToppingList(0);
-        saveTotalPrice(GameObject.Find("GameNum").GetComponent<GameNum>().StageNum, GameObject.Find("GameNum").GetComponent<GameNum>().OrderNum);
+        saveTotalPrice(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);
 
         //for (int i = 0; i < orders.Count; i++)
         //{
@@ -72,7 +72,7 @@ public class test : MonoBehaviour
     {
         if (csvNum == 0 && !isTyping)
         {
-            NameText.GetComponent<TextMeshProUGUI>().text = FindMessage(GameObject.Find("GameNum").GetComponent<GameNum>().StageNum, "SalespersonName", -1);// data[0]["message"].ToString();
+            NameText.GetComponent<TextMeshProUGUI>().text = FindMessage(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, "SalespersonName", -1);// data[0]["message"].ToString();
             //StartCoroutine(typing(SalespersonMessageText, data[0]["message"].ToString()));
             StartCoroutine(typing(SalespersonMessageText, FindMessage(0, "SalespersonText", 0)));
         }
@@ -81,7 +81,7 @@ public class test : MonoBehaviour
             CustomerMessage.SetActive(true);
 
             //StartCoroutine(typing(CustomerMessageText, data[1]["message"].ToString()));
-            StartCoroutine(typing(CustomerMessageText, FindOrder(GameObject.Find("GameNum").GetComponent<GameNum>().StageNum, GameObject.Find("GameNum").GetComponent<GameNum>().OrderNum)));
+            StartCoroutine(typing(CustomerMessageText, FindOrder(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum)));
         }
         else if(csvNum==2 && !isTyping)
         {
@@ -102,9 +102,9 @@ public class test : MonoBehaviour
             clearMessageText(SalespersonMessageText);
 
             FindMenuName();
-            int index = FindIndex(GameObject.Find("GameNum").GetComponent<GameNum>().StageNum, GameObject.Find("GameNum").GetComponent<GameNum>().OrderNum);
+            int index = FindIndex(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);
             //Debug.Log("index: " + index);
-            if (GameObject.Find("GameNum").GetComponent<GameNum>().StageNum == 1)
+            if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum == 1)
             {
                 orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text = "";
 
@@ -125,7 +125,7 @@ public class test : MonoBehaviour
                     += "\n1 " + menuScript.Beverage[(int)orders[index]["Beverage"]].Name;
             }
 
-            else if (GameObject.Find("GameNum").GetComponent<GameNum>().StageNum == 2)
+            else if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum == 2)
             {
                 orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>().text = "";
 
@@ -149,7 +149,7 @@ public class test : MonoBehaviour
                     + "\n+ Whipped cream"
                     + "\n+ Choco syrup";
             }
-            saveTotalPrice(GameObject.Find("GameNum").GetComponent<GameNum>().StageNum, GameObject.Find("GameNum").GetComponent<GameNum>().OrderNum);
+            saveTotalPrice(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);
 
             orderSheet.transform.Find("TotalPriceText").GetComponent<TextMeshProUGUI>().text
                 = "$ " + orders[index]["TotalPrice"].ToString();
@@ -188,7 +188,7 @@ public class test : MonoBehaviour
             {
                 //SceneManager.LoadScene("Stage1Cooking");
                 loadingSceneController.LoadScene("Stage1Cooking");
-                DontDestroyOnLoad(GameObject.Find("GameNum").gameObject);
+                DontDestroyOnLoad(GameObject.Find("GameSetting").gameObject);
 
                 //юс╫ц
                 //GameObject.Find("GameNum").GetComponent<GameNum>().OrderNum++;
@@ -296,8 +296,8 @@ public class test : MonoBehaviour
 
     void FindMenuName()
     {
-        if (GameObject.Find("GameNum").GetComponent<GameNum>().StageNum == 1) menuName = "pancakes";
-        else if (GameObject.Find("GameNum").GetComponent<GameNum>().StageNum == 2) menuName = "cupcake";
+        if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum == 1) menuName = "pancakes";
+        else if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum == 2) menuName = "cupcake";
     }
     void setActiveGameObject()
     {
