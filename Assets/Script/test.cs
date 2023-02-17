@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class test : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class test : MonoBehaviour
 
     public GameObject order;
     public GameObject orderSheet;
+    public GameObject menuChoice;
 
     string menuName;
     int[] ToppingList = new int[10];
@@ -41,7 +43,7 @@ public class test : MonoBehaviour
         NameText = SalespersonMessage.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         SalespersonMessageText = SalespersonMessage.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         CustomerMessageText = CustomerMessage.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        
+        menuChoice = transform.Find("menuChoice").gameObject;
         clearMessageText(SalespersonMessageText);
         clearMessageText(CustomerMessageText);
 
@@ -64,7 +66,7 @@ public class test : MonoBehaviour
 
         clearMessageText(orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>());
 
-        transform.GetChild(2).gameObject.SetActive(false);
+        menuChoice.SetActive(false);
     }
 
     // Update is called once per frame
@@ -94,7 +96,8 @@ public class test : MonoBehaviour
             else
             {
                 setMessageGameObject(CustomerMessage, false);
-                transform.GetChild(2).gameObject.SetActive(true);
+                SalespersonMessage.SetActive(false);
+                menuChoice.SetActive(true);
 
                 Timer = 2f;
             }
@@ -102,6 +105,7 @@ public class test : MonoBehaviour
             clearMessageText(SalespersonMessageText);
 
             FindMenuName();
+
             int index = FindIndex(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);
             //Debug.Log("index: " + index);
             if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum == 1)
@@ -149,17 +153,19 @@ public class test : MonoBehaviour
                     + "\n+ Whipped cream"
                     + "\n+ Choco syrup";
             }
-            saveTotalPrice(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);
+            //saveTotalPrice(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);
 
             orderSheet.transform.Find("TotalPriceText").GetComponent<TextMeshProUGUI>().text
                 = "$ " + orders[index]["TotalPrice"].ToString();
 
-            if (transform.GetChild(2).GetComponent<menuChoice>().checkNext)
+            if (menuChoice.GetComponent<menuChoice>().checkNext)
             {
                 orderSheet.SetActive(true);
-                transform.GetChild(2).gameObject.SetActive(false);
+                menuChoice.SetActive(false);
                 StartCoroutine(typing(SalespersonMessageText, FindMessage(0, "SalespersonText", 1)));
-                transform.GetChild(2).GetComponent<menuChoice>().checkNext = false;
+                menuChoice.GetComponent<menuChoice>().checkNext = false;
+
+                SalespersonMessage.SetActive(true);
             }
 
             //CustomerMessage.SetActive(false);
@@ -177,7 +183,7 @@ public class test : MonoBehaviour
         else if(csvNum==4 && !isTyping)
         {
 
-
+            
             if (Timer > 0)
             {
                 //Debug.Log(Timer);
@@ -190,7 +196,7 @@ public class test : MonoBehaviour
                 loadingSceneController.LoadScene("Stage1Cooking");
                 DontDestroyOnLoad(GameObject.Find("GameSetting").gameObject);
 
-                //юс╫ц
+                //О©╫с╫О©╫
                 //GameObject.Find("GameNum").GetComponent<GameNum>().OrderNum++;
                 csvNum = 0;
 
@@ -266,7 +272,12 @@ public class test : MonoBehaviour
             totalPrice += menuScript.AddShotCream[(int)orders[index]["AddShotCream"]].Price;
             totalPrice += menuScript.Beverage[(int)orders[index]["Beverage"]].Price;
             orders[index]["TotalPrice"] = totalPrice;
-            totalPrice = 0;
+            
+            using (TextWriter sw = new StreamWriter("Assets/order.csv"))
+            {
+                sw.WriteLine("{index},{6}", totalPrice);
+            }
+                totalPrice = 0;
         }
         else if (stageNum == 2)
         {

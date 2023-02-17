@@ -37,14 +37,14 @@ public class loadingSceneController : MonoBehaviour
         {
             yield return null;
 
-            if(op.progress < 0.5f)
+            if(op.progress < 0.6f)
             {
                 progressBar.fillAmount = op.progress;
             }
             else
             {
                 timer += Time.deltaTime;
-                progressBar.fillAmount = Mathf.Lerp(0.5f, 1f, timer*0.3f);
+                progressBar.fillAmount = Mathf.Lerp(0.6f, 1f, timer*0.3f);
                 if (progressBar.fillAmount >= 1f)
                 {
                     //yield return new WaitForSeconds(3f);

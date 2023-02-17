@@ -35,7 +35,7 @@ public class OpeningMove : MonoBehaviour
     {
         //if (customer.transform.position.x < (customerOriginPos + distance/2).x)
         //{
-        //    //Debug.Log("Áß°£Âë ¿Ô¾î¿ä");
+        //    //Debug.Log("ï¿½ß°ï¿½ï¿½ï¿½ ï¿½Ô¾ï¿½ï¿½");
         //    if (smoke.transform.position.x < -5.5)
         //    {
         //        smoke.transform.position += Vector3.right * MoveSpeed * Time.deltaTime;

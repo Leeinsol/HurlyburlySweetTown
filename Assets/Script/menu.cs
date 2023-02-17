@@ -61,8 +61,6 @@ public class menu : MonoBehaviour
             initializeMaterial(Beverage, 1, "Chocolate shake", 4);
             initializeMaterial(Beverage, 2, "Vanilla shake", 4);
         }
-
-
     }
 
     void initializeMaterial( Material[] materials, int index, string Name, float Price)

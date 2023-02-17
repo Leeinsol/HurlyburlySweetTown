@@ -58,8 +58,8 @@ public class Cooking : MonoBehaviour //, IDragHandler
     public GameObject whipping;
 
     public GameObject whipped;
-    public GameObject eachStrawberry; //¹Ýµþ±â, ÇÑµþ±â´Â strawberry ¾µ °Í
-    public GameObject eachBlueberry; //3¹ø¸ðµÎ È¸ÀüÀ¸·Î ¹Ù²Ù¸é µÉµí
+    public GameObject eachStrawberry; //ï¿½Ýµï¿½ï¿½ï¿½, ï¿½Ñµï¿½ï¿½ï¿½ï¿½ strawberry ï¿½ï¿½ ï¿½ï¿½
+    public GameObject eachBlueberry; //3ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù¸ï¿½ ï¿½Éµï¿½
     public GameObject eachBanana;
 
     public GameObject firstButton;
@@ -158,7 +158,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
 
     GameObject clonedComplete;
  
-    bool bowlBack = false; //»ç¿ëÇÏ´ÂÁö È®ÀÎÇÒ °Í
+    bool bowlBack = false; //ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     bool inductionBack = false;
     bool cuttingBoardBack = false;
     bool decoratingBack = false;
@@ -195,13 +195,13 @@ public class Cooking : MonoBehaviour //, IDragHandler
     bool isHotMilk = false;
 
     bool drawHeart = false;
-    int[] remakePancakes = new int[4]; //[0]:ÈÖÇÎ, [1]:µþ±â, [2]:ºí·çº£¸®, [3]:¹Ù³ª³ª
+    int[] remakePancakes = new int[4]; //[0]:ï¿½ï¿½ï¿½ï¿½, [1]:ï¿½ï¿½ï¿½ï¿½, [2]:ï¿½ï¿½çº£ï¿½ï¿½, [3]:ï¿½Ù³ï¿½ï¿½ï¿½
 
     Vector2 whipperPos;
 
     public Slider slTimer;
     //float fSliderBarTime;
-    float tempTime = 0; //¾²´ÂÁö È®ÀÎ
+    float tempTime = 0; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 
 
     List<Dictionary<string, object>> orders;
@@ -587,7 +587,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
 
                     //if(clonedThickDough.transform.position.y >= 2)
                     //{
-                    //    //Debug.Log("°É?");
+                    //    //Debug.Log("ï¿½ï¿½?");
                     //    //clonedThickDough.transform.position = originPos;
                     //    tempPos.y -= 1000 * Time.deltaTime;
                     //    clonedThickDough.transform.position = tempPos;
@@ -652,7 +652,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
 
     void showCuttingBoardBack()
     {
-        //Debug.Log("ÀÌ°Å ºÒ·¯Áö³ª?");
+        //Debug.Log("ï¿½Ì°ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½?");
         inductionBack = false;
         cuttingBoardBack = true;
 
@@ -682,7 +682,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
 
     void cutIngredients()
     {
-        if(cuttingStrawberry == true) //µþ±â ÀÚ¸£´Â Àå¸é
+        if(cuttingStrawberry == true) //ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         {
             if(isLine==1)
             {
@@ -1079,7 +1079,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
 
     void hideDecoRecipe()
     {
-        Debug.Log("½ÇÇà");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½");
         Destroy(clonedDecoRecipe);
     }
 
@@ -1170,7 +1170,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
 
                 if(rayHit.collider.gameObject.tag.Equals("greenButton2"))
                 {
-                    //Debug.Log("µÇ³ª");
+                    //Debug.Log("ï¿½Ç³ï¿½");
                     clonedDropMilk = Instantiate(dropMilk, new Vector3(1.47f, 1.35f, 0), Quaternion.identity);
                     isHotMilk = true;
                 }
@@ -1331,14 +1331,14 @@ public class Cooking : MonoBehaviour //, IDragHandler
 
         clonedLeaf = Instantiate(leaf, new Vector3(-0.14f, -0.28f, 0), Quaternion.identity);
 
-        //ÈÖÇÎ
+        //ï¿½ï¿½ï¿½ï¿½
         if(remakePancakes[0] == 1)
         {
             clonedWhipped = Instantiate(whipped, new Vector3(-0.07f, -0.42f, 0), Quaternion.identity);
             clonedWhipped.transform.localScale = new Vector3(1.1f, 1.1f, 0);
         }
 
-        //µþ±â1°³
+        //ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½
         if(remakePancakes[1] == 1)
         {
             //SpriteRenderer sr = null;
@@ -1349,7 +1349,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
             //sr.sortingOrder = 6;
             clonedEachStrawberry.Add(temp);
         }
-        //µþ±â2°³
+        //ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½
         if (remakePancakes[1] ==2)
         {
             SpriteRenderer sr = null;
@@ -1367,7 +1367,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
             sr.sortingOrder = 8;
             clonedEachStrawberry.Add(temp);
         }
-        //µþ±â3°³
+        //ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½
         if (remakePancakes[1]==3)
         {
             clonedEachStrawberry.Clear();
@@ -1388,7 +1388,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
             clonedEachStrawberry.Add(temp);
         }
 
-        //ºí·çº£¸®1°³
+        //ï¿½ï¿½çº£ï¿½ï¿½1ï¿½ï¿½
         if(remakePancakes[2]==1)
         {
             clonedEachBlueberry.Clear();
@@ -1399,7 +1399,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
             temp.transform.localEulerAngles = new Vector3(0, 180f, 38.67f);
             clonedEachBlueberry.Add(temp);
         }
-        //ºí·çº£¸®2°³
+        //ï¿½ï¿½çº£ï¿½ï¿½2ï¿½ï¿½
         if (remakePancakes[2]==2)
         {
             clonedEachBlueberry.Clear();
@@ -1415,7 +1415,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
             temp.transform.localEulerAngles = new Vector3(0, 0, -19.03f);
             clonedEachBlueberry.Add(temp);
         }
-        //ºí·çº£¸®3°³
+        //ï¿½ï¿½çº£ï¿½ï¿½3ï¿½ï¿½
         if(remakePancakes[2]==3)
         {
             clonedEachBlueberry.Clear();
@@ -1437,7 +1437,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
             clonedEachBlueberry.Add(temp);
         }
 
-        //¹Ù³ª³ª1°³
+        //ï¿½Ù³ï¿½ï¿½ï¿½1ï¿½ï¿½
         if(remakePancakes[3]==1)
         {
             //SpriteRenderer sr = null;
@@ -1450,7 +1450,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
             //sr.sortingOrder = 
             clonedEachBanana.Add(temp);
         }
-        //¹Ù³ª³ª2°³
+        //ï¿½Ù³ï¿½ï¿½ï¿½2ï¿½ï¿½
         if (remakePancakes[3]==2)
         {
             clonedEachBanana.Clear();
@@ -1464,7 +1464,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
             temp.transform.localScale = new Vector3(0.3f, 0.3f, 1);
             clonedEachBanana.Add(temp);
         }
-        //¹Ù³ª³ª3°³
+        //ï¿½Ù³ï¿½ï¿½ï¿½3ï¿½ï¿½
         if (remakePancakes[3]==3)
         {
             clonedEachBanana.Clear();
@@ -1508,7 +1508,16 @@ public class Cooking : MonoBehaviour //, IDragHandler
     {
         clonedComplete = Instantiate(complete, new Vector3(0, 0, 0), Quaternion.identity);
 
-        GameObject.Find("GameNum").GetComponent<GameNum>().OrderNum++;
+        GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum++;
+        if(GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum == 3)
+        {
+            if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum == 2)
+            {
+                Invoke("LoadEndingScene", 1f);
+            }
+            GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum++;
+            GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum = 0;
+        }
         Invoke("LoadStage1Scene", 1f);
 
     }
@@ -1517,10 +1526,13 @@ public class Cooking : MonoBehaviour //, IDragHandler
     {
         SceneManager.LoadScene("Stage1");
     }
-
+    void LoadEndingScene()
+    {
+        SceneManager.LoadScene("Ending");
+    }
     bool checkDecoCount()
     {
-        int index = FindIndex(GameObject.Find("GameNum").GetComponent<GameNum>().StageNum, GameObject.Find("GameNum").GetComponent<GameNum>().OrderNum);
+        int index = FindIndex(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);
         
         
         if (remakePancakes[0] != 1) return false;

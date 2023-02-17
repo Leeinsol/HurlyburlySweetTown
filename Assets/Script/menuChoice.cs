@@ -460,6 +460,14 @@ public class menuChoice : MonoBehaviour
                 BeverageList[i] = false;
             }
             //checkNext = false;
+            //int index = FindIndex(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);
+            //float temp = 0;
+            //Debug.Log(orders[index]["TotalPrice"]);
+
+            ////temp = float.Parse(orders[index]["TotalPrice"].ToString());
+            //temp = (float)orders[index]["TotalPrice"];
+            //PlayerPrefs.SetFloat("Money", PlayerPrefs.GetFloat("Money") + temp);
+
             ClickToppingButton();
             transform.Find("Button").GetChild(4).gameObject.SetActive(false);
             gameObject.SetActive(false);
@@ -524,4 +532,19 @@ public class menuChoice : MonoBehaviour
 
         return checkNext;
     }
+
+    public int FindIndex(int stage, int orderNum)
+    {
+        for (int i = 0; i < orders.Count; i++)
+        {
+            if (orders[i]["stage"].ToString() == stage.ToString()
+                && orders[i]["orderNum"].ToString() == orderNum.ToString())
+            {
+                //Debug.Log(i);
+                return i;
+            }
+        }
+        return -1;
+    }
+
 }
