@@ -16,8 +16,7 @@ public class cookingRecipe : MonoBehaviour
     void Start()
     {
         orders = CSVReader.Read("order");
-        menuScript = GameObject.Find("GameSetting").GetComponent<menu>();
-
+        menuScript = GameObject.Find("Canvas").GetComponent<menu>();
         int index = FindIndex(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);
 
         for (int i = 0; i < 4; i++)
@@ -32,7 +31,6 @@ public class cookingRecipe : MonoBehaviour
         for (int i = orders[index]["Topping"].ToString().Length - 1; i >= 0; i--)
         {
             int a = int.Parse(orders[index]["Topping"].ToString().Substring(i, 1));
-            Debug.Log(a);
             transform.GetChild(3 - i).gameObject.GetComponent<TextMeshProUGUI>().text = "3 " + menuScript.Topping[a].Name;
             transform.GetChild(6 - i).gameObject.GetComponent<Image>().sprite = Stage1ToppingImage[a];
         }

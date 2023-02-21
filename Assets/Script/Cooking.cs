@@ -1079,7 +1079,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
 
     void hideDecoRecipe()
     {
-        Debug.Log("����");
+        //Debug.Log("����");
         Destroy(clonedDecoRecipe);
     }
 
@@ -1492,13 +1492,20 @@ public class Cooking : MonoBehaviour //, IDragHandler
             Vector2 touchPos = new Vector2(worldPos.x, worldPos.y);
             Ray2D ray = new Ray2D(touchPos, Vector2.zero);
             RaycastHit2D rayHit = Physics2D.Raycast(ray.origin, ray.direction);
+            
+            int index = FindIndex(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);
 
-            if(rayHit.collider != null)
+            if (rayHit.collider != null)
             {
                 if(rayHit.collider.gameObject.tag.Equals("bell"))
                 {
                     Invoke("showComplete", 0.5f);
                     Debug.Log(checkDecoCount());
+
+                    if (!checkDecoCount())
+                    {
+                        PlayerPrefs.SetFloat("Money", PlayerPrefs.GetFloat("Money") - float.Parse(orders[index]["TotalPrice"].ToString()) / 2);
+                    }
                 }
             }
         }
@@ -1513,7 +1520,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
         {
             if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum == 2)
             {
-                Invoke("LoadEndingScene", 1f);
+                Invoke("LoadStage2Scene", 1f);
             }
             GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum++;
             GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum = 0;
@@ -1526,15 +1533,16 @@ public class Cooking : MonoBehaviour //, IDragHandler
     {
         SceneManager.LoadScene("Stage1");
     }
+    void LoadStage2Scene()
+    {
+        SceneManager.LoadScene("Stage2");
+    }
     void LoadEndingScene()
     {
         SceneManager.LoadScene("Ending");
     }
     bool checkDecoCount()
-    {
-        int index = FindIndex(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);
-        
-        
+    {        
         if (remakePancakes[0] != 1) return false;
         else if (remakePancakes[1] != 2) return false;
         else if (remakePancakes[2] != 3) return false;

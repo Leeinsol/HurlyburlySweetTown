@@ -1,8 +1,11 @@
+using System.IO;
 using UnityEngine;
 using System;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 public class CSVReader
 {
@@ -47,5 +50,31 @@ public class CSVReader
 			list.Add(entry);
 		}
 		return list;
+	}
+	public static void Write(List<Dictionary<string, object>> data, string file)
+	{
+		using (var writer = new StreamWriter(file))
+		{
+			var header = string.Join(",", data[0].Keys.ToArray());
+			writer.WriteLine(header);
+
+			foreach (var row in data)
+			{
+				var values = row.Values.Select(o => Escape(o.ToString())).ToArray();
+				writer.WriteLine(string.Join(",", values));
+			}
+
+			writer.Close();
+			writer.Dispose();
+		}
+	}
+
+	private static string Escape(string value)
+	{
+		if (value.Contains(",") || value.Contains("\"") || value.Contains("\n"))
+		{
+			value = "\"" + value.Replace("\"", "\"\"") + "\"";
+		}
+		return value;
 	}
 }

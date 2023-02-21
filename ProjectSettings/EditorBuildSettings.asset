@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Stage1Cooking.unity
     guid: b21fa7d8e646aa641bc8ff8576e7e84d
   - enabled: 1
+    path: Assets/Scenes/Stage2.unity
+    guid: c85cb92849e405c46bf50719ea1dec6a
+  - enabled: 1
     path: Assets/Scenes/Ending.unity
     guid: 413d1fa3c0aa8e847b1d14019993da8c
   m_configObjects: {}

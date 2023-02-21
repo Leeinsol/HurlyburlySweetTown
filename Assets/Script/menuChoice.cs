@@ -59,7 +59,8 @@ public class menuChoice : MonoBehaviour
     {
         orders = CSVReader.Read("order");
 
-        menuScript = GameObject.Find("GameSetting").GetComponent<menu>();
+        //menuScript = GameObject.Find("GameSetting").GetComponent<menu>();
+        menuScript = GameObject.Find("Canvas").GetComponent<menu>();
 
         ToppingButton = transform.Find("Button").GetChild(0).gameObject;
         FlavorButton = transform.Find("Button").GetChild(1).gameObject;
@@ -130,7 +131,7 @@ public class menuChoice : MonoBehaviour
         //GameObject clickObject = EventSystem.current.currentSelectedGameObject;
         resetButtonBackground();
         ToppingButton.GetComponent<Image>().sprite = buttonChoiceBackground;
-
+        
 
         for (int i = 0; i < 3; i++)
         {

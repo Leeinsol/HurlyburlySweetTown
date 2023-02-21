@@ -11,8 +11,9 @@ public class cookingMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        menuScript = GameObject.Find("GameSetting").GetComponent<menu>();
-
+        //menuScript = GameObject.Find("GameSetting").GetComponent<menu>();
+        //menuScript = GameObject.Find("Canvas").GetComponent<menu>();
+        menuScript = transform.parent.parent.GetComponent<menu>();
         orders = CSVReader.Read("order");
 
         int index = FindIndex(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);

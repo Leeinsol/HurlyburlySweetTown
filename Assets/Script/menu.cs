@@ -23,7 +23,7 @@ public class menu : MonoBehaviour
 
         if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum==1)
         {
-            initializeMaterial(Topping, 0, "Banana", 1);
+            initializeMaterial(Topping, 0, "Banana", 1); 
             initializeMaterial(Topping, 1, "Blueberry", 1.5f);
             initializeMaterial(Topping, 2, "Strawberry", 2);
 

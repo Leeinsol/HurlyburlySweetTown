@@ -8,7 +8,7 @@ using System.IO;
 public class test : MonoBehaviour
 {
     List<Dictionary<string, object>> data;
-    List<Dictionary<string, object>> orders;
+    static List<Dictionary<string, object>> orders;
 
     TextMeshProUGUI NameText;
     TextMeshProUGUI SalespersonMessageText;
@@ -24,7 +24,7 @@ public class test : MonoBehaviour
     public GameObject order;
     public GameObject orderSheet;
     public GameObject menuChoice;
-
+    GameObject cloneMenuChoice;
     string menuName;
     int[] ToppingList = new int[10];
 
@@ -35,15 +35,18 @@ public class test : MonoBehaviour
 
     float Timer = 2f;
 
+    int index = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-        menuScript = GameObject.Find("GameSetting").GetComponent<menu>();
+        //menuScript = GameObject.Find("GameSetting").GetComponent<menu>();
+        menuScript = transform.GetComponent<menu>();
         orderSheet.SetActive(false);
         NameText = SalespersonMessage.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         SalespersonMessageText = SalespersonMessage.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         CustomerMessageText = CustomerMessage.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        menuChoice = transform.Find("menuChoice").gameObject;
+        //menuChoice = transform.Find("menuChoice").gameObject;
         clearMessageText(SalespersonMessageText);
         clearMessageText(CustomerMessageText);
 
@@ -56,6 +59,7 @@ public class test : MonoBehaviour
         saveToppingList(0);
         saveTotalPrice(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);
 
+        //index = FindIndex(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);
         //for (int i = 0; i < orders.Count; i++)
         //{
         //    if (orders[i]["stage"].ToString() == "2")
@@ -66,7 +70,7 @@ public class test : MonoBehaviour
 
         clearMessageText(orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>());
 
-        menuChoice.SetActive(false);
+        //menuChoice.SetActive(false);
     }
 
     // Update is called once per frame
@@ -97,7 +101,12 @@ public class test : MonoBehaviour
             {
                 setMessageGameObject(CustomerMessage, false);
                 SalespersonMessage.SetActive(false);
-                menuChoice.SetActive(true);
+                //menuChoice.SetActive(true);
+                if (cloneMenuChoice == null)
+                {
+                    cloneMenuChoice = Instantiate(menuChoice, new Vector3(0, 0, 0), Quaternion.identity, GameObject.Find("Canvas").transform);
+                    cloneMenuChoice.transform.localPosition = new Vector3(0, 0, 0);
+                }
 
                 Timer = 2f;
             }
@@ -105,8 +114,7 @@ public class test : MonoBehaviour
             clearMessageText(SalespersonMessageText);
 
             FindMenuName();
-
-            int index = FindIndex(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);
+            index = FindIndex(GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum, GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum);
             //Debug.Log("index: " + index);
             if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum == 1)
             {
@@ -158,12 +166,12 @@ public class test : MonoBehaviour
             orderSheet.transform.Find("TotalPriceText").GetComponent<TextMeshProUGUI>().text
                 = "$ " + orders[index]["TotalPrice"].ToString();
 
-            if (menuChoice.GetComponent<menuChoice>().checkNext)
+            if (cloneMenuChoice.GetComponent<menuChoice>().checkNext)
             {
                 orderSheet.SetActive(true);
-                menuChoice.SetActive(false);
                 StartCoroutine(typing(SalespersonMessageText, FindMessage(0, "SalespersonText", 1)));
-                menuChoice.GetComponent<menuChoice>().checkNext = false;
+                //cloneMenuChoice.GetComponent<menuChoice>().checkNext = false;
+                Destroy(cloneMenuChoice);
 
                 SalespersonMessage.SetActive(true);
             }
@@ -178,7 +186,9 @@ public class test : MonoBehaviour
             CustomerMessage.SetActive(true);
 
             StartCoroutine(typing(CustomerMessageText, FindMessage(0, "CustomerText", 0)));
+            PlayerPrefs.SetFloat("Money", PlayerPrefs.GetFloat("Money") + float.Parse(orders[index]["TotalPrice"].ToString()));
 
+            
         }
         else if(csvNum==4 && !isTyping)
         {
@@ -193,7 +203,14 @@ public class test : MonoBehaviour
             else
             {
                 //SceneManager.LoadScene("Stage1Cooking");
-                loadingSceneController.LoadScene("Stage1Cooking");
+                if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum == 1)
+                {
+                    loadingSceneController.LoadScene("Stage1Cooking");
+                }
+                else if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum == 2)
+                {
+                    loadingSceneController.LoadScene("Stage2");
+                }
                 DontDestroyOnLoad(GameObject.Find("GameSetting").gameObject);
 
                 //�ӽ�
@@ -257,7 +274,7 @@ public class test : MonoBehaviour
 
     void saveTotalPrice(int stageNum, int orderNum)
     {
-        int index = FindIndex(stageNum, orderNum);
+        index = FindIndex(stageNum, orderNum);
 
         if (stageNum == 1)
         {
@@ -271,13 +288,12 @@ public class test : MonoBehaviour
 
             totalPrice += menuScript.AddShotCream[(int)orders[index]["AddShotCream"]].Price;
             totalPrice += menuScript.Beverage[(int)orders[index]["Beverage"]].Price;
-            orders[index]["TotalPrice"] = totalPrice;
-            
-            using (TextWriter sw = new StreamWriter("Assets/order.csv"))
-            {
-                sw.WriteLine("{index},{6}", totalPrice);
-            }
-                totalPrice = 0;
+
+            AddData(index, "TotalPrice", totalPrice);
+
+            Debug.Log(orders[index]["TotalPrice"]);
+
+            totalPrice = 0;
         }
         else if (stageNum == 2)
         {
@@ -289,10 +305,22 @@ public class test : MonoBehaviour
                 totalPrice += menuScript.AddShotCream[int.Parse(orders[index]["AddShotCream"].ToString().Substring(i, 1))].Price;
             }
             totalPrice += menuScript.Beverage[(int)orders[index]["Beverage"]].Price;
-            orders[index]["TotalPrice"] = totalPrice;
+            AddData(index, "TotalPrice", totalPrice);
+
             totalPrice = 0;
         }
     }
+
+    public static void AddData(int rowIndex, string columnName, object value)
+    {
+        if (orders.Count > rowIndex)
+        {
+            orders[rowIndex][columnName] = value;
+
+            CSVReader.Write(orders, Application.dataPath + "/Resources/order.csv");
+        }
+    }
+
 
     void saveToppingList(int OrderNum)
     {

@@ -45,6 +45,18 @@ public class SetCursor : MonoBehaviour
                 {
                     OnDrag();
                 }
+                if (rayHit.collider.gameObject.tag.Equals("pipingBag"))
+                {
+                    OnDrag();
+                }
+                if (rayHit.collider.gameObject.tag.Equals("whipping"))
+                {
+                    OnDrag();
+                }
+                if (rayHit.collider.gameObject.tag.Equals("choco"))
+                {
+                    OnDrag();
+                }
             }
 
             if (rayHit.collider.gameObject.tag.Equals("bell"))

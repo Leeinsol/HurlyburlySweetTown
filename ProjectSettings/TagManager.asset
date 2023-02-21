@@ -21,6 +21,19 @@ TagManager:
   - pan
   - redButton2
   - greenButton2
+  - iceBox
+  - orange
+  - butter
+  - arrow
+  - pipingBag
+  - muffin
+  - cherry
+  - ovenDoor
+  - yogurt
+  - ovenHandle
+  - sugar
+  - ovenSwitch
+  - choco
   layers:
   - Default
   - TransparentFX
