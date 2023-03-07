@@ -2459,7 +2459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f8a116dd5e0cc45bf46299cdd78625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StageNum: 1
+  StageNum: 2
   OrderNum: 2
   moneyText: {fileID: 782197386}
 --- !u!1 &1847525135

@@ -192,6 +192,7 @@ public class Stage2main : MonoBehaviour
     Vector3 targetPos = new Vector3(2.78f, -3.328f, 0);
     Vector2 objPos = new Vector2(-5.27f, -2.48f);
     public Vector2 nowPos;
+    float[] bestScore = new float[5];
 
     // Start is called before the first frame update
     void Start()
@@ -1353,23 +1354,60 @@ public class Stage2main : MonoBehaviour
         {
             clonedComplete = Instantiate(complete, new Vector3(0, 0, 0), Quaternion.identity);
             toDestroy.Add(clonedComplete);
-
+            setScore(PlayerPrefs.GetFloat("Money"));
             GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum++;
             if (GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum == 3)
             {
-                if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum == 2)
-                {
-                    Invoke("LoadStage2Scene", 1f);
-                }
-                GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum++;
-                GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum = 0;
+                Debug.Log("Ending");
+                Invoke("LoadEndingScene", 1f);
+                //if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum == 2)
+                //{
+                //    Invoke("LoadStage2Scene", 1f);
+                //}
+                //GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum++;
+                //GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum = 0;
+
+                //if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum == 3)
+                //{
+                //    Invoke("LoadEndingScene", 1f);
+                //}
+
             }
-            Invoke("LoadStage1Scene", 1f);
+            //Invoke("LoadStage1Scene", 1f);
 
         }
     }
     void LoadStage1Scene()
     {
         SceneManager.LoadScene("Stage1");
+    }
+
+    void LoadEndingScene()
+    {
+        SceneManager.LoadScene("Ending");
+    }
+    void setScore(float currentScore)
+    {
+        PlayerPrefs.SetFloat("CurrentPlayerScore", currentScore);
+
+        float tmpScore = 0f;
+        for (int i = 0; i < 5; i++)
+        {
+            bestScore[i] = PlayerPrefs.GetFloat(i + "BestScore");
+
+            while (bestScore[i] < currentScore)
+            {
+                tmpScore = bestScore[i];
+                bestScore[i] = currentScore;
+
+                PlayerPrefs.SetFloat(i + "BestScore", currentScore);
+
+                currentScore = tmpScore;
+            }
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            PlayerPrefs.SetFloat(i + "BestScore", bestScore[i]);
+        }
     }
 }

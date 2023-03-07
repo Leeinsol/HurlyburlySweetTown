@@ -1522,11 +1522,12 @@ public class Cooking : MonoBehaviour //, IDragHandler
             {
                 Invoke("LoadStage2Scene", 1f);
             }
+
             GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum++;
             GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum = 0;
+
         }
         Invoke("LoadStage1Scene", 1f);
-
     }
 
     void LoadStage1Scene()
@@ -1537,10 +1538,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
     {
         SceneManager.LoadScene("Stage2");
     }
-    void LoadEndingScene()
-    {
-        SceneManager.LoadScene("Ending");
-    }
+
     bool checkDecoCount()
     {        
         if (remakePancakes[0] != 1) return false;

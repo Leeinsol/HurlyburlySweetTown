@@ -29,4 +29,5 @@ public class GameNum : MonoBehaviour
     {
         moneyText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetFloat("Money").ToString();
     }
+
 }
