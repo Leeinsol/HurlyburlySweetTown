@@ -1354,10 +1354,11 @@ public class Stage2main : MonoBehaviour
         {
             clonedComplete = Instantiate(complete, new Vector3(0, 0, 0), Quaternion.identity);
             toDestroy.Add(clonedComplete);
-            setScore(PlayerPrefs.GetFloat("Money"));
             GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum++;
             if (GameObject.Find("GameSetting").GetComponent<GameNum>().OrderNum == 3)
             {
+                setScore(PlayerPrefs.GetFloat("Money"));
+
                 Debug.Log("Ending");
                 Invoke("LoadEndingScene", 1f);
                 //if (GameObject.Find("GameSetting").GetComponent<GameNum>().StageNum == 2)
@@ -1373,7 +1374,11 @@ public class Stage2main : MonoBehaviour
                 //}
 
             }
-            //Invoke("LoadStage1Scene", 1f);
+            else
+            {
+                Invoke("LoadStage1Scene", 1f);
+
+            }
 
         }
     }
