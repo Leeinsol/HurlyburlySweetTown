@@ -10,9 +10,9 @@ public class Muffin : MonoBehaviour
     Vector3 clonedPos;
 
     bool isTryAgain = false;
-    bool isCherry = false;
+    //bool isCherry = false;
 
-    GameObject[] randomDeco = new GameObject[5]; //µþ±â, Ã¼¸®, ¿À·»Áö, ¹Ù³ª³ª
+    GameObject[] randomDeco = new GameObject[6]; //ï¿½ï¿½ï¿½ï¿½, Ã¼ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½Ù³ï¿½ï¿½ï¿½
     List<GameObject> clonedItems = new List<GameObject>();
 
     public GameObject strawberry;
@@ -23,17 +23,25 @@ public class Muffin : MonoBehaviour
     GameObject clonedOrange;
     public GameObject banana;
     GameObject clonedBanana;
+    public GameObject oreo;
+    GameObject clonedOreo;
 
     float timeSinceLastClone = 0f;
 
-    Stage2main main;
+    bakingEdit baking;
+    int correctToppingNum;
+    string correctToppingTag;
+
+
+    //Stage2main main;
 
     //Vector2 nowPos;
 
     // Start is called before the first frame update
     void Start()
     {
-        main = GameObject.Find("forScript").GetComponent<Stage2main>();
+        //main = GameObject.Find("forScript").GetComponent<Stage2main>();
+        baking = GameObject.Find("forScript").GetComponent<bakingEdit>();
 
         randomDeco[0] = strawberry;
         randomDeco[0].transform.localScale = new Vector3(0.15f, 0.15f, 0);
@@ -41,6 +49,17 @@ public class Muffin : MonoBehaviour
         randomDeco[2] = orange;
         randomDeco[3] = banana;
         randomDeco[3].transform.localScale = new Vector3(0.4f, 0.4f, 0);
+        randomDeco[4] = oreo;
+
+        correctToppingNum = baking.menuList[3];
+        if (correctToppingNum == 0)
+            correctToppingTag = "cherry";
+        else if (correctToppingNum == 1)
+            correctToppingTag = "oreo";
+        else if (correctToppingNum == 3)
+            correctToppingTag = "strawberryCup";
+
+        Debug.Log("correct topping tag" + correctToppingTag);
     }
 
     // Update is called once per frame
@@ -61,6 +80,7 @@ public class Muffin : MonoBehaviour
                 GameObject toAdd = Instantiate(randomDeco[rIndex], rPos, Quaternion.identity);
 
                 clonedItems.Add(toAdd);
+                baking.toDestroy.Add(toAdd);
             }
             timeSinceLastClone = 0f;
         }
@@ -79,13 +99,47 @@ public class Muffin : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //Debug.Log("collision detected");
-        if(collision.collider.tag.Equals("bananaCup") || collision.collider.tag.Equals("strawberryCup")
-            || collision.collider.tag.Equals("orange"))
+        //if(collision.collider.tag.Equals("bananaCup") || collision.collider.tag.Equals("strawberryCup")
+        //    || collision.collider.tag.Equals("orange"))
+        //{
+        //    clonedPos.x = this.gameObject.transform.position.x + 3.94f;
+        //    clonedPos.y = this.gameObject.transform.position.y;
+
+        //    if(!isTryAgain)
+        //    {
+        //        clonedTryAgain = Instantiate(tryAgain, clonedPos, Quaternion.identity);
+        //        Destroy(clonedTryAgain, 0.5f);
+        //        isTryAgain = true;
+        //        Invoke("delayTryAgain", 1f);
+
+        //        Destroy(collision.collider.gameObject);
+        //    }
+            
+        //}
+
+        //if(collision.collider.tag.Equals("cherry"))
+        //{
+        //    main.changeMuffin = true;
+        //    //nowPos = this.gameObject.transform.position;
+        //    main.nowPos = this.gameObject.transform.position;
+        //    Destroy(this.gameObject, 0.1f);
+        //}
+
+        if(collision.collider.tag.Equals(correctToppingTag))
+        {
+            baking.clearMiniGame = true;
+            baking.nowPos = this.gameObject.transform.position;
+            //Destroy(this.gameObject);
+            Destroy(collision.gameObject);
+
+            Debug.Log("baking clear mini game" + baking.clearMiniGame);
+        }
+        else
         {
             clonedPos.x = this.gameObject.transform.position.x + 3.94f;
             clonedPos.y = this.gameObject.transform.position.y;
 
-            if(!isTryAgain)
+            if (!isTryAgain)
             {
                 clonedTryAgain = Instantiate(tryAgain, clonedPos, Quaternion.identity);
                 Destroy(clonedTryAgain, 0.5f);
@@ -94,15 +148,6 @@ public class Muffin : MonoBehaviour
 
                 Destroy(collision.collider.gameObject);
             }
-            
-        }
-
-        if(collision.collider.tag.Equals("cherry"))
-        {
-            main.changeMuffin = true;
-            //nowPos = this.gameObject.transform.position;
-            main.nowPos = this.gameObject.transform.position;
-            Destroy(this.gameObject, 0.1f);
         }
     }
 
@@ -113,7 +158,7 @@ public class Muffin : MonoBehaviour
 
     int selectRandomIndex()
     {
-        int index = UnityEngine.Random.Range(0, 4);
+        int index = UnityEngine.Random.Range(0, 5);
         return index;
     }
 

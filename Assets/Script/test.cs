@@ -37,6 +37,10 @@ public class test : MonoBehaviour
 
     int index = 0;
 
+    AudioSource audioSource;
+    public AudioClip talkingSound;
+    bool isPlaying = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,6 +75,9 @@ public class test : MonoBehaviour
         clearMessageText(orderSheet.transform.Find("MainMenuText").GetComponent<TextMeshProUGUI>());
 
         //menuChoice.SetActive(false);
+
+        audioSource = GetComponent<AudioSource>();
+        Debug.Log("audio source" + audioSource);
     }
 
     // Update is called once per frame
@@ -178,6 +185,7 @@ public class test : MonoBehaviour
 
             //CustomerMessage.SetActive(false);
 
+
         }
 
         else if (csvNum == 3 && !isTyping)
@@ -227,6 +235,24 @@ public class test : MonoBehaviour
             }
         }
 
+        if (isTyping)
+        {
+            //audioSource.clip = talkingSound;
+            if(!isPlaying)
+            {
+                //audioSource.loop = true;
+                //audioSource.volume = 1f;
+                audioSource.Play();
+                isPlaying = true;
+            }
+        }
+        else if (!isTyping)
+        {
+            //audioSource.clip = null;
+            audioSource.Stop();
+            //audioSource.volume = 0f;
+            isPlaying = false;
+        }
     }
 
     string FindMessage(int stage, string type, int messageNum)

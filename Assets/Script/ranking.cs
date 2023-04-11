@@ -15,7 +15,7 @@ public class ranking : MonoBehaviour
         PlayerPrefs.SetFloat("Money", 0);
         for (int i=0; i<5; i++)
         {
-            bestScoreText[i].gameObject.GetComponent<TextMeshProUGUI>().text = string.Format("{0:N3}", PlayerPrefs.GetFloat(i + "BestScore"));
+            bestScoreText[i].gameObject.GetComponent<TextMeshProUGUI>().text = string.Format("{0:N2}", PlayerPrefs.GetFloat(i + "BestScore"));
         }
     }
 

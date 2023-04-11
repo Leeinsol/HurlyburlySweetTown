@@ -1066,7 +1066,7 @@ MonoBehaviour:
   Stage2FlavorImage:
   - {fileID: 21300000, guid: 088986c3069d98c46ad20c25953cd1c0, type: 3}
   - {fileID: 21300000, guid: 374ddc4bf5a1b21479dfe8c561efe05c, type: 3}
-  - {fileID: 21300000, guid: 9112f2bfecec2744dbcf8ec1151fc6b8, type: 3}
+  - {fileID: 21300000, guid: f175335d97f90b5449320683a1310bb0, type: 3}
   Stage2AddShotCreamImage:
   - {fileID: 21300000, guid: d3a900e46083cf8459ceb6a1f9a6ab1d, type: 3}
   - {fileID: 21300000, guid: 1f8b502c4a7128b44ba2b8cddd3b4def, type: 3}

@@ -23,10 +23,13 @@ public class SetCursor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //SetOrigin();
+
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 touchPos = new Vector2(worldPos.x, worldPos.y);
         Ray2D ray = new Ray2D(touchPos, Vector2.zero);
         RaycastHit2D rayHit = Physics2D.Raycast(ray.origin, ray.direction);
+        
 
         if (rayHit.collider != null)
         {
@@ -37,32 +40,43 @@ public class SetCursor : MonoBehaviour
                 {
                     OnDrag();
                 }
-                if (rayHit.collider.gameObject.tag.Equals("bowl"))
+                else if (rayHit.collider.gameObject.tag.Equals("bowl"))
                 {
                     OnDrag();
                 }
-                if (rayHit.collider.gameObject.tag.Equals("kettle"))
+                else if (rayHit.collider.gameObject.tag.Equals("kettle"))
                 {
                     OnDrag();
                 }
-                if (rayHit.collider.gameObject.tag.Equals("pipingBag"))
+                else if (rayHit.collider.gameObject.tag.Equals("pipingBag"))
                 {
                     OnDrag();
                 }
-                if (rayHit.collider.gameObject.tag.Equals("whipping"))
+                else if (rayHit.collider.gameObject.tag.Equals("whipping"))
                 {
                     OnDrag();
                 }
-                if (rayHit.collider.gameObject.tag.Equals("choco"))
+                else if (rayHit.collider.gameObject.tag.Equals("choco"))
                 {
                     OnDrag();
                 }
             }
 
-            if (rayHit.collider.gameObject.tag.Equals("bell"))
+            else if (rayHit.collider.gameObject.tag.Equals("bell"))
             {
                 onBell();
             }
+
+            else if (rayHit.collider.gameObject.tag.Equals("ovenSwitch"))
+            {
+                OnOven();
+            }
+            else
+            {
+                SetOrigin();
+
+            }
+
         }
         else
         {

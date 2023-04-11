@@ -1536,7 +1536,7 @@ public class Cooking : MonoBehaviour //, IDragHandler
     }
     void LoadStage2Scene()
     {
-        SceneManager.LoadScene("Stage2");
+      SceneManager.LoadScene("Stage2");
     }
 
     bool checkDecoCount()
